@@ -58,6 +58,17 @@ conda activate isg-profiler
 pip install .
 ```
 
+```bash
+# [Optional] Remove defaults channels if required.
+# Please check conda / miniconda EULA BEFORE use default channels.
+conda config --remove channels defaults
+
+# Check default chanels is removed
+conda config --show-sources
+# If 'defaults' still appears above, remove it by specifying the target file:
+conda config --file {TARGET_FILE} --remove channels defaults
+```
+
 #### Install salmon from github repository
 
 Install salmon from github repository:
@@ -141,6 +152,18 @@ Example: In case of two sample, ERR12917750 (paired end) and ERR2012446 (single 
 ./isg_profiler.sh
 ```
 
+#### **isg_profiler.sh** Command Line Options
+
+| Option               | Required | Description                                                |
+| :------------------- | :------: | :--------------------------------------------------------- |
+| `--thread <int>`     |          | Number of threads (default: 4).                            |
+| `--fastq_dir <path>` |          | Directory containing fastq files (default: input/fastq).   |
+| `--out_dir <path>`   |          | Output directory for salmon (default: output).             |
+| `--ref_dir <path>`   |          | Reference directory (default: reference).                  |
+| `--metadata <path>`  |          | Sample metadata file (default: input/sample_metadata.tsv). |
+| `--per_species`      |          | (Optional) If set, group counts by hum_symbol and tax_id.  |
+| `--help`             |          | Show the help message and exit.                            |
+
 ### Execute normalizer directly:
 
 You can excute normalize tool directly when you already have salmon quant.sf files:
@@ -156,7 +179,7 @@ python -m quant_normalizer \
 
 | Option              | Required | Description                                                                                                                                      |
 | :------------------ | :------: | :----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `-h, --help`        |          | Show this help message and exit.                                                                                                                 |
+| `-h, --help`        |          | Show the help message and exit.                                                                                                                  |
 | `--reference_dir`   |   Yes    | Directory containing reference files (e.g., gene2refseq list, Aves/Mars removal lists, mean & SD tables, and Amniota398_sp_id.list).             |
 | `--sample_metadata` |   Yes    | Path to the sample metadata table (TSV). Required columns: `sample_id`, `species_host`, `order_host`, `clade_host`.                              |
 | `--sf_dir`          |   Yes    | Directory containing Salmon `quant.sf` files. Files must be named as `<sample_id>_quant.sf`.                                                     |
@@ -164,7 +187,8 @@ python -m quant_normalizer \
 | `--per_species`     |          | If set, groups counts by both `hum_symbol` and `tax_id` and attaches species information. Note: **ISG_score will NOT be computed** in this mode. |
 | `--log_level`       |          | Set the logging level. Choose from `info`, `debug`, or `warning`.                                                                                |
 
-> [!IMPORTANT] Always verify that your `--sf_dir` and `--sample_metadata` share the same sample IDs to ensure mappings.
+> [!IMPORTANT]
+> Always verify that your `--sf_dir` and `--sample_metadata` share the same sample IDs to ensure mappings.
 
 ### Outputs
 
@@ -172,9 +196,8 @@ Salmon files:
 
 - `{BIOPROJECT_ID}_quant.sf`: salmon quant result file
 
-:::note info
-About salmon options, see [Salmon](https://salmon.readthedocs.io/en/latest/salmon.html) Documentation.
-:::
+> [!NOTE]
+> About salmon options, see [Salmon Documentation](https://salmon.readthedocs.io/en/latest/salmon.html).
 
 Results written to `output-prefix` option:
 
@@ -183,9 +206,8 @@ Results written to `output-prefix` option:
 | default mode        | ✓               | ✓                    |
 | `--per-spices` mode | x               | ✓                    |
 
-:::note info
-Only default mode result can be used for ISG-VIP. See ISG-VIP documentation for detail.
-:::
+> [!NOTE]
+> Only default mode result can be used for ISG-VIP. See ISG-VIP documentation for detail.
 
 #### default mode
 
@@ -199,7 +221,7 @@ Only default mode result can be used for ISG-VIP. See ISG-VIP documentation for 
 | **order_host**   | String    | Added from `sample_metadata.tsv`.                  |
 | **clade_host**   | String    | Added from `sample_metadata.tsv`.                  |
 
-##### `per_gene_count.tsv` (without `--per)
+##### `per_gene_count.tsv` (without `--per`)
 
 | Column Header          | Data Type | Description                         |
 | :--------------------- | :-------- | :---------------------------------- |
