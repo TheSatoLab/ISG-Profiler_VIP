@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "isg-vip"
+version = "1.0.0"
+description = "ISG-based viral infection predictor using ensemble machine learning"
+readme = "README.md"
+requires-python = "~=3.12.0"
+license = {file = "LICENSE"}
+
+dependencies = [
+    "lightgbm == 4.6.0",
+    "numpy == 1.26.4",
+    "pandas == 2.3.3",
+    "scipy == 1.13.1",
+    "scikit-learn == 1.5.1",
+    "seaborn == 0.13.2",
+    "joblib == 1.4.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/TheSatoLab/ISG-Profiler_VIP"
+Documentation = "https://github.com/TheSatoLab/ISG-Profiler_VIP#readme"
+Repository = "https://github.com/TheSatoLab/ISG-Profiler_VIP.git"
+Issues = "https://github.com/TheSatoLab/ISG-Profiler_VIP/issues"
+Changelog = "https://github.com/TheSatoLab/ISG-Profiler_VIP/releases"
+
+[project.scripts]
+isg-vip = "isg_vip.__main__:main"
+
+[tool.setuptools.package-data]
+isg_vip = ["model_dir/*", "reference/*"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["isg_vip*"]
+exclude = ["tests*", "notebooks*", "scripts*"]
+
