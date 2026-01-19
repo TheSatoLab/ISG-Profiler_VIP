@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "isg-profiler"
+version = "1.0.0"
+description = "ISG-based viral infection predictor using ensemble machine learning"
+readme = "README.md"
+requires-python = "~=3.12.0"
+license = {file = "LICENSE"}
+
+dependencies = [
+    "numpy == 1.26.4",
+    "pandas == 2.3.3",   
+]
+
+[project.urls]
+Homepage = "https://github.com/TheSatoLab/ISG-Profiler_VIP"
+Documentation = "https://github.com/TheSatoLab/ISG-Profiler_VIP#readme"
+Repository = "https://github.com/TheSatoLab/ISG-Profiler_VIP.git"
+Issues = "https://github.com/TheSatoLab/ISG-Profiler_VIP/issues"
+Changelog = "https://github.com/TheSatoLab/ISG-Profiler_VIP/releases"
+
+[project.scripts]
+quant-normalizer = "quant_normalizer.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["quant_normalizer*"]
+exclude = ["tests*", "notebooks*", "scripts*"]
+

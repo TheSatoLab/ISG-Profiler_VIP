@@ -1,0 +1,4 @@
+!.gitignore
+*.tsv
+!sample_metadata.example.tsv
+fastq/*

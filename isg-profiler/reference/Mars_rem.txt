@@ -1,0 +1,6 @@
+hum_symbol
+IFIT2
+IFIT3
+MX1
+TAP2
+TRIM21
