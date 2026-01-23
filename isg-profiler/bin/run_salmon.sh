@@ -10,9 +10,10 @@ THREAD=""
 FASTQ_DIR=""
 OUTPUT_DIR=""
 SALMON_INDEX_PATH=""
+SALMON_BIN="salmon" # Default to using command in PATH
 
 usage() {
-  echo "Usage: $0 --thread <int> --fastq_dir <path> --out_dir <path> --index <path>"
+  echo "Usage: $0 --thread <int> --fastq_dir <path> --out_dir <path> --index <path> [--salmon_bin <path>]"
   exit 1
 }
 
@@ -20,7 +21,7 @@ usage() {
 while [[ $# -gt 0 ]]; do
   key="$1"
   case "$key" in
-  --thread | --fastq_dir | --out_dir | --salmon_index)
+  --thread | --fastq_dir | --out_dir | --salmon_index | --salmon_bin)
     if [[ -z "${2:-}" ]] || [[ "${2:-}" == --* ]]; then
       echo "Error: Argument for $key is missing"
       usage
@@ -31,6 +32,7 @@ while [[ $# -gt 0 ]]; do
     --fastq_dir) FASTQ_DIR="$2" ;;
     --out_dir) OUTPUT_DIR="$2" ;;
     --salmon_index) SALMON_INDEX_PATH="$2" ;;
+    --salmon_bin) SALMON_BIN="$2" ;;
     esac
     shift 2
     ;;
@@ -86,7 +88,8 @@ run_salmon() {
     return 1
   fi
 
-  salmon quant "${salmon_opts[@]}"
+  # Call salmon using the variable
+  "${SALMON_BIN}" quant "${salmon_opts[@]}"
 
   if [ -f "${SAMPLE_TMP}/quant.sf" ]; then
     cp "${SAMPLE_TMP}/quant.sf" "${OUTPUT_DIR}/${ID}_quant.sf"

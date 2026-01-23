@@ -13,6 +13,7 @@ REF_DIR="reference"
 SALMON_INDEX_DIR_NAME="Isoform_241003_salmon"
 SAMPLE_METADATA="input/sample_metadata.tsv"
 PER_SPECIES_OPT="" # Default is empty (= disabled)
+SALMON_BIN="salmon" # Default command
 # ======================
 
 # Help messages
@@ -24,6 +25,7 @@ usage() {
   echo "  --out_dir <path>        Output directory for salmon (default: ${OUTPUT_DIR})"
   echo "  --ref_dir <path>        Reference directory (default: ${REF_DIR})"
   echo "  --metadata <path>       Sample metadata file (default: ${SAMPLE_METADATA})"
+  echo "  --salmon_bin <path>     Path to salmon executable (default: ${SALMON_BIN})"
   echo "  --per_species           (Optional) If set, group counts by hum_symbol and tax_id"
   echo "  --help                  Show this help message"
   exit 0
@@ -34,7 +36,7 @@ while [[ $# -gt 0 ]]; do
   key="$1"
   # Error if argument has no value, except help and boolean flags
   case "$key" in
-  --thread | --fastq_dir | --out_dir | --ref_dir | --metadata)
+  --thread | --fastq_dir | --out_dir | --ref_dir | --metadata | --salmon_bin)
     if [[ -z "${2:-}" ]] || [[ "${2:-}" == --* ]]; then
       echo "Error: Argument for $key is missing"
       usage
@@ -46,6 +48,7 @@ while [[ $# -gt 0 ]]; do
     --out_dir) OUTPUT_DIR="$2" ;;
     --ref_dir) REF_DIR="$2" ;;
     --metadata) SAMPLE_METADATA="$2" ;;
+    --salmon_bin) SALMON_BIN="$2" ;;
     esac
     shift 2
     ;;
@@ -104,6 +107,24 @@ REF_DIR=$(get_abs_path "${REF_DIR}")
 mkdir -p "${OUTPUT_DIR}"
 OUTPUT_DIR=$(get_abs_path "${OUTPUT_DIR}")
 
+# === CHECK SALMON BINARY ===
+# 1. Check if command exists (handles both PATH and absolute paths)
+if ! command -v "${SALMON_BIN}" >/dev/null 2>&1; then
+  echo "Error: Salmon executable '${SALMON_BIN}' not found." >&2
+  echo "       Please ensure it is installed or provide the correct path using --salmon_bin." >&2
+  exit 1
+fi
+
+# 2. Check if it is executable and works (get version)
+if ! "${SALMON_BIN}" --version >/dev/null 2>&1; then
+  echo "Error: Found '${SALMON_BIN}' but failed to execute it." >&2
+  echo "       Please check permissions or binary format." >&2
+  exit 1
+fi
+
+# Capture version string for the log
+SALMON_VERSION_STR=$("${SALMON_BIN}" --version | head -n 1)
+
 # =======================================================
 
 # Define script directory
@@ -116,6 +137,8 @@ echo "Input FASTQ Dir:      ${FASTQ_DIR}"
 echo "Input metadata file:  ${SAMPLE_METADATA}"
 echo "Reference Dir:        ${REF_DIR}"
 echo "Output Dir:           ${OUTPUT_DIR}"
+echo "Salmon Binary:        ${SALMON_BIN}"
+echo "Salmon Version:       ${SALMON_VERSION_STR}"
 
 # Check PER_SPECIES_OPT variable and echo Enabled / Disabled
 if [[ -n "${PER_SPECIES_OPT}" ]]; then
@@ -132,10 +155,10 @@ SALMON_INDEX_PATH="${REF_DIR}/${SALMON_INDEX_DIR_NAME}"
   --thread "${THREAD}" \
   --fastq_dir "${FASTQ_DIR}" \
   --out_dir "${OUTPUT_DIR}" \
-  --salmon_index "${SALMON_INDEX_PATH}"
+  --salmon_index "${SALMON_INDEX_PATH}" \
+  --salmon_bin "${SALMON_BIN}"
 
-# isg_profiler output prefix setup
-# 出力先ディレクトリ配下にプレフィックスを作成するように変更
+# quant_normalizer result output directory
 PROFILER_OUT_DIR="${OUTPUT_DIR}/isg_profiler_res"
 
 # NOTE: ${PER_SPECIES_OPT} is intentionally unquoted to allow it to be empty
