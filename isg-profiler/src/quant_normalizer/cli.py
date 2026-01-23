@@ -21,7 +21,7 @@ def parse_args():
     parser = argparse.ArgumentParser(
         prog="quant_normalizer",
         description="ISG Profiler: "
-        "Compute normalized and standardized ISG profiles from Salmon quant.sf files."
+        "Compute normalized and standardized ISG profiles from Salmon quant.sf files.",
     )
 
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
@@ -118,9 +118,12 @@ def main():
         )  # adds "species" column
 
     # Save per-gene results
+    per_gene_count_tsv_file_name = (
+        "per_gene_per_spices_count.tsv" if per_species else "per_gene_count.tsv"
+    )
     write_to_tsv(
         all_sample_gene_count_df,
-        out_dir / "per_gene_count.tsv",
+        out_dir / per_gene_count_tsv_file_name,
     )
 
     # --------------------------------------------------------
