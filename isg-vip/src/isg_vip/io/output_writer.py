@@ -46,7 +46,6 @@ def export_final_prediction(
     merged_df = merged_df.sort_values(by="ID")
     base_name = "Infection_Prediction_Stacking_all"
     write_to_csv(merged_df, dir_name / f"{base_name}.csv")
-    write_to_tsv(merged_df, dir_name / f"{base_name}.txt")
 
     final_df = merged_df[["ID", "Final_Prediction_score(mean)", "Final_Prediction_Label"]]
     final_df = final_df.rename(
