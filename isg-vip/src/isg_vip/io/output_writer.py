@@ -10,16 +10,6 @@ from pandas import DataFrame
 logger = logging.getLogger(__name__)
 
 
-def write_to_tsv(df: DataFrame, output_path: Path) -> None:
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    logger.info(f"TSV file was exported to {output_path}")
-    df.to_csv(
-        output_path,
-        sep="\t",
-        index=False,
-    )
-
-
 def write_to_csv(df: DataFrame, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     logger.info(f"CSV file was exported to {output_path}")
@@ -57,4 +47,3 @@ def export_final_prediction(
 
     base_name_final = "Infection_Prediction_Stacking_final"
     write_to_csv(final_df, dir_name / f"{base_name_final}.csv")
-    write_to_tsv(final_df, dir_name / f"{base_name_final}.txt")
