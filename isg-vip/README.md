@@ -5,104 +5,188 @@ Machine learning-based viral infection prediction using ISG (Interferon-Stimulat
 ## Requirements
 
 - Python 3.12
-- OpenMP
+- OpenMP (Required for LightGBM)
 
 ## Quick Start
 
-### Installation
+### 1. Preparation
 
-Get source
+First, get the source code.
+
+**Get source**
 
 ```bash
 git clone https://github.com/TheSatoLab/ISG-Profiler_VIP.git
 
-cd isg-vip
+cd ISG-Profiler_VIP/isg-vip/
 ```
 
-#### Prepare Light GBM
+### 2. Installation
 
-This application requires LightGBM.
-If you encounter an OSError like followings, install the OpenMP library:
-`OSError: libgomp.so.1: cannot open shared object file: No such file or directory`
+#### Step 2-1: Prepare System Dependencies (LightGBM / OpenMP)
+
+This application requires LightGBM. Please install the necessary libraries for your operating system.
+
+**For Mac OS (Apple Silicon / Intel)**
+Homebrew is required.
+
+```bash
+brew install lightgbm
+```
+
+**For Linux (Debian / Ubuntu)**
+If you encounter `OSError: libgomp.so.1: cannot open shared object file`, install the OpenMP library:
 
 ```bash
 apt-get update && apt-get install -y libgomp1
 ```
 
-To install dependencies, choose one of the following procedures:
+#### Step 2-2: Install Python Dependencies
 
-- Install via conda (Recommended if ISG-Profiler installed via conda)
-- Create virtual env and install requirements
-- Install requirements directly
+Choose **one** of the following methods to install the Python environment.
 
-#### Install via conda
+- **Option A (Recommended):** Use the existing conda environment from ISG-Profiler.
+- **Option B:** Create a new virtual environment manually.
+
+**Option A: Install via conda (Recommended)**
+
+If you have already set up the `isg-profiler` environment following the [ISG-Profiler README](../isg-profiler/README.md#option-a-install-via-conda-recommended), you can reuse it.
 
 ```bash
+# Activate the existing environment
 conda activate isg-profiler
 
+# Install ISG-VIP into this environment
 pip install .
 ```
 
-#### Create virtual env and install requirements:
+**Option B: Install manually (pip)**
+
+Use this method if you cannot use conda. Choose one of the following methods:
+
+**Method 1: Create virtual env (Recommended)**
 
 ```bash
+# Check your current directory.
+pwd # Output: {YOUR_INSTALLTION_PATH}/ISG-Profiler_VIP/isg-vip
+
 # Create virtual env
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 
 ## Update venv pip
 pip install --upgrade pip
-## then install requirements
+## Install requirements
 pip install .
 ```
 
-#### Install requirements directly:
+**Method 2: Install directly**
 
 ```bash
+# Check your current directory.
+pwd # Output: {YOUR_INSTALLTION_PATH}/ISG-Profiler_VIP/isg-vip
+
 pip install .
 ```
 
-### Prepare sample files
+### 3. Tutorial: Run with example data
 
-Following files are required:
+Before processing your actual samples, let's verify the installation using the **example dataset**.
 
-- `per_gene_count.tsv`: ISG expression data. Same as ISG-Profiler output `per_gene_count.tsv` (without `--per)
-- `sample_metadata.tsv`: Sample metadata. Same as ISG-Profiler input `sample_metadata.tsv`
+**1. Check current directory**
 
-#### `per_gene_count.tsv` (without `--per)
+Ensure you are in the project root directory (`isg-vip`).
 
-Same as ISG-Profiler output `per_gene_count.tsv`.
-TSV format, with folloing columns and contents:
+```bash
+# Check current directory path
+pwd
+# Example output: .../ISG-Profiler_VIP/isg-vip
+```
+
+**2. Prepare example data**
+
+> [!TIP]
+> **Already downloaded?**
+> If you have already downloaded `example_files_20260126.zip` in the ISG-Profiler tutorial, you can skip the download. Copy or move the extracted directory to the current location, or simply ensure it is accessible.
+
+If you don't have the example data yet, download it from GitHub Releases:
+
+```bash
+# Download example data zip
+curl -f -L -O https://github.com/TheSatoLab/ISG-Profiler_VIP/releases/download/example_files_20260126/example_files_20260126.zip
+
+# Unzip (This will create 'example_files_20260126' directory)
+unzip example_files_20260126.zip
+```
+
+**3. Run ISG-VIP**
+
+Run the prediction using the example files. We explicitly specify the input file paths using command line arguments.
+
+```bash
+python3 -m isg_vip \
+  --gene_count_file example_files_20260126/isg-vip/input/per_gene_count.tsv \
+  --metadata example_files_20260126/isg-vip/input/sample_metadata.tsv \
+  --output example_output
+```
+
+**4. Check the results**
+
+If the command finishes successfully, check the `example_output` directory.
+
+```bash
+ls -F example_output/
+# Output: Infection_Prediction_0.csv ... Infection_Prediction_Stacking_final.csv
+```
+
+> [!TIP]
+> **Verification Complete!** Now you are ready to process your actual samples. Proceed to the next step.
+
+### 4. Prepare sample files
+
+Place your input files in the `input` directory. The following files are required:
+
+- `per_gene_count.tsv`: ISG expression data.
+- `sample_metadata.tsv`: Sample metadata.
+
+#### `per_gene_count.tsv`
+
+This file corresponds to the `per_gene_count.tsv` output from ISG-Profiler (generated **without** the `--per_species` option).
+For details on how to generate this file, please refer to the [ISG-Profiler README](../isg-profiler/README.md#per_gene_counttsv-without---per-spices).
 
 | Column Header          | Data Type | Description                  |
 | :--------------------- | :-------- | :--------------------------- |
-| **sample_id**          | String    | Same as ISG-Proflier output. |
-| **hum_symbol**         | float     | Same as ISG-Proflier output. |
-| **raw_count**          | String    | Same as ISG-Proflier output. |
-| **type**               | String    | Same as ISG-Proflier output. |
+| **sample_id**          | String    | Same as ISG-Profiler output. |
+| **hum_symbol**         | float     | Same as ISG-Profiler output. |
+| **raw_count**          | String    | Same as ISG-Profiler output. |
+| **type**               | String    | Same as ISG-Profiler output. |
 | **normalized_count**   | String    | Not used in ISG-VIP.         |
 | **standardized_count** | String    | Not used in ISG-VIP.         |
 
 #### `sample_metadata.tsv`
 
-Same as ISG-Profiler input `sample_metadata.tsv`.
-TSV format, with folloing columns and contents:
+This file is the same as the ISG-Profiler input `sample_metadata.tsv`.
 
 | Column Header    | Data Type | Description           |
 | :--------------- | :-------- | :-------------------- |
-| **sample_id**    | String    | Same as ISG-Proflier. |
-| **species_host** | String    | Same as ISG-Proflier. |
-| **order_host**   | String    | Same as ISG-Proflier. |
+| **sample_id**    | String    | Same as ISG-Profiler. |
+| **species_host** | String    | Same as ISG-Profiler. |
+| **order_host**   | String    | Same as ISG-Profiler. |
 | **clade_host**   | String    | Not used in ISG-VIP.  |
 
-### Execute
+> [!IMPORTANT]
+> Always verify that your `per_gene_count.tsv` and `sample_metadata.tsv` share the same **sample_id**s.
+
+### 5. Execute
+
+Run the prediction tool using `python3`.
 
 ```bash
 # Runs ISG-VIP using default paths
-python -m isg_vip
+python3 -m isg_vip
 
 # Runs ISG-VIP with specific file paths
-python -m isg_vip \
+python3 -m isg_vip \
   --gene_count_file input/per_gene_count.tsv \
   --metadata input/sample_metadata.tsv \
   --output output
@@ -110,18 +194,16 @@ python -m isg_vip \
 
 #### **isg_vip** Command Line Options
 
-| Option              | Description                              | Default Value               |
-| :------------------ | :--------------------------------------- | :-------------------------- |
-| `-h, --help`        | Show help message.                       | -                           |
-| `--gene_count_file` | per_gene_count.tsv. See README.md file.  | `input/per_gene_count.tsv`  |
-| `--metadata`        | sample_metadata.tsv. See README.md file. | `input/sample_metadata.tsv` |
-| `--output`          | Output directory.                        | `output`                    |
-
-> [!IMPORTANT] Always verify that your `--gene_count_file` and `--metadata` share the same sample IDs to ensure accurate normalization.
+| Option              | Description                    | Default Value               |
+| :------------------ | :----------------------------- | :-------------------------- |
+| `-h, --help`        | Show help message.             | -                           |
+| `--gene_count_file` | Path to `per_gene_count.tsv`.  | `input/per_gene_count.tsv`  |
+| `--metadata`        | Path to `sample_metadata.tsv`. | `input/sample_metadata.tsv` |
+| `--output`          | Output directory.              | `output`                    |
 
 ## Outputs
 
-Results written to `--output` (default: `output`):
+Results are written to the directory specified by `--output` (default: `output`) in **CSV** format.
 
 | File Name                                          | Description                                                                          |
 | :------------------------------------------------- | :----------------------------------------------------------------------------------- |
@@ -149,6 +231,45 @@ If you want to verify the integrity of the model files, run the following comman
 sha256sum -c checksums.sha256
 ```
 
+## Troubleshooting
+
+### Error: `No module named isg_vip`
+
+If you see the following error:
+
+> `/path/to/python3: `No module named isg_vip`
+
+This means the Python package was not installed correctly in your current environment. This often happens if the `pip install .` step was skipped or run in the wrong directory.
+
+**Solution:**
+Navigate to the repository root (`isg-vip`), activate your virtual environment, and reinstall:
+
+```bash
+# Ensure you are in the correct directory
+cd ISG-Profiler_VIP/isg-vip/
+
+# Activate your environment
+conda activate isg-profiler  # or 'source .venv/bin/activate'
+
+# Re-install the package
+pip install .
+```
+
+### Installation Conflicts / Pip Errors
+
+If `pip install .` fails or behaves unexpectedly (e.g., conflicts with global user packages installed in your home directory):
+
+**Solution:**
+Export `PYTHONNOUSERSITE=1` to ignore local user packages before installing.
+
+```bash
+# Prevent conflicts with user-site packages
+export PYTHONNOUSERSITE=1
+
+# Install dependencies
+pip install .
+```
+
 ## Developer Guide
 
 ### Install dependencies
@@ -158,17 +279,17 @@ sha256sum -c checksums.sha256
 
 ```bash
 # Create virtual env
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 
 # Update pip
 pip install --upgrade pip
 
 # Install dependencies
-python -m pip install -e ".[dev]"
+python3 -m pip install -e ".[dev]"
 ```
 
-### Dependencis version
+### Dependencies version
 
 When upgrading dependencies, please also pin the ISG-Profiler dependencies to the SAME VERSION.
 
