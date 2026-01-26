@@ -107,7 +107,7 @@ pwd
 
 > [!TIP]
 > **Already downloaded?**
-> If you have already downloaded `example_files_20260126.zip` in the ISG-Profiler tutorial, you can skip the download. Copy or move the extracted directory to the current location, or simply ensure it is accessible.
+> If you have already downloaded the example dataset (`example_files_YYYYMMDD.zip`, see [ISG-Profiler README](../isg-profiler//README.md#3-tutorial-run-with-example-data)) in the ISG-Profiler tutorial, you can skip the download. Copy or move the extracted directory to the current location, or simply ensure it is accessible.
 
 If you don't have the example data yet, download it from GitHub Releases:
 
@@ -121,7 +121,14 @@ unzip example_files_20260126.zip
 
 **3. Run ISG-VIP**
 
-Run the prediction using the example files. We explicitly specify the input file paths using command line arguments.
+Run the prediction using the example files.
+In this step, we use the following files included in the example dataset directory:
+
+- **`per_gene_count.tsv`:** `isg-vip/input/per_gene_count.tsv` (for `--gene_count_file`)
+- **`sample_metadata.tsv`:** `isg-vip/input/sample_metadata.tsv` (for `--metadata`)
+
+Execute the command below.
+We explicitly specify the input file paths using command line arguments.
 
 ```bash
 python3 -m isg_vip \

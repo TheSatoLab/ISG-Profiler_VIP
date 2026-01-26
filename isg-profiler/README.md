@@ -188,10 +188,10 @@ Get the example dataset from GitHub Releases.
 
 ```bash
 # Download example data zip
-curl -f -L -O curl -f -L -O https://github.com/TheSatoLab/ISG-Profiler_VIP/releases/download/example_files_20260121/example_files_20260121.zip
+curl -f -L -O https://github.com/TheSatoLab/ISG-Profiler_VIP/releases/download/example_files_20260126/example_files_20260126.zip
 
-# Unzip (This will create 'example_files_20260121' directory)
-unzip example_files_20260121.zip
+# Unzip (This will create 'example_files_20260126' directory)
+unzip example_files_20260126.zip
 ```
 
 **3. Run ISG-Profiler**
@@ -200,8 +200,8 @@ Run the script specifying the example directories.
 
 ```bash
 ./isg_profiler.sh \
-  --fastq_dir example_files_20260121/isg-profiler/input/fastq \
-  --metadata example_files_20260121/isg-profiler/input/sample_metadata.tsv \
+  --fastq_dir example_files_20260126/isg-profiler/input/fastq \
+  --metadata example_files_20260126/isg-profiler/input/sample_metadata.tsv \
   --out_dir example_output
 ```
 
