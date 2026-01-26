@@ -284,21 +284,6 @@ Store your **uncompressed** FASTQ files here.
 | `--per_species`       |    N     | -                           | If set, group counts by hum_symbol and tax_id. |
 | `--help`              |    N     | -                           | Show the help message and exit.                |
 
-#### **quant_normalizer** Command Line Options
-
-| Option              | Required | Description                                                                                                                                      |
-| :------------------ | :------: | :----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `-h, --help`        |          | Show the help message and exit.                                                                                                                  |
-| `--reference_dir`   |   Yes    | Directory containing reference files (e.g., gene2refseq list, Aves/Mars removal lists, mean & SD tables, and Amniota398_sp_id.list).             |
-| `--sample_metadata` |   Yes    | Path to the sample metadata table (TSV). Required columns: `sample_id`, `species_host`, `order_host`, `clade_host`.                              |
-| `--sf_dir`          |   Yes    | Directory containing Salmon `quant.sf` files. Files must be named as `<sample_id>_quant.sf`.                                                     |
-| `--out_dir`         |   Yes    | Output directory path (e.g., `isg_profiler_out/result`).                                                                                         |
-| `--per_species`     |          | If set, groups counts by both `hum_symbol` and `tax_id` and attaches species information. Note: **ISG_score will NOT be computed** in this mode. |
-| `--log_level`       |          | Set the logging level. Choose from `info`, `debug`, or `warning`.                                                                                |
-
-> [!IMPORTANT]
-> Always verify that your `--sf_dir` and `--sample_metadata` share the same sample IDs to ensure mappings.
-
 ### Outputs
 
 Salmon files:
@@ -368,6 +353,22 @@ python -m quant_normalizer \
   --sf_dir salmon_res \
   --out_dir isg_profiler_out/test_out
 ```
+
+#### **quant_normalizer** Command Line Options
+
+| Option                     | Required | Default | Description                                         |
+| :------------------------- | :------: | :------ | :-------------------------------------------------- |
+| `--reference_dir <path>`   |    Y     | -       | Directory containing reference files.               |
+| `--sample_metadata <path>` |    Y     | -       | Path to sample metadata table (TSV).                |
+| `--sf_dir <path>`          |    Y     | -       | Directory containing Salmon `quant.sf` files.       |
+| `--out_dir <path>`         |    Y     | -       | Output directory path.                              |
+| `--per_species`            |    N     | -       | If set, groups counts by `hum_symbol` and `tax_id`. |
+| `--version`                |    N     | -       | Show program's version number and exit.             |
+| `--log_level <str>`        |    N     | `info`  | Log level (`info`, `debug`, `warning`).             |
+| `--help`                   |    N     | -       | Show the help message and exit.                     |
+
+> [!IMPORTANT]
+> Always verify that your `--sf_dir` and `--sample_metadata` share the same sample IDs to ensure mappings.
 
 ## Troubleshooting
 
