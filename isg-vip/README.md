@@ -27,6 +27,13 @@ cd ISG-Profiler_VIP/isg-vip/
 
 This application requires LightGBM. Please install the necessary libraries for your operating system.
 
+**For conda users**
+It can be installed with the following command.
+
+```bash
+conda install -c conda-forge libgomp
+```
+
 **For Mac OS (Apple Silicon / Intel)**
 Homebrew is required.
 
