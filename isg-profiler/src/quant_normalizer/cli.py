@@ -119,7 +119,7 @@ def main():
 
     # Save per-gene results
     per_gene_count_tsv_file_name = (
-        "per_gene_per_spices_count.tsv" if per_species else "per_gene_count.tsv"
+        "per_gene_per_species_count.tsv" if per_species else "per_gene_count.tsv"
     )
     write_to_tsv(
         all_sample_gene_count_df,

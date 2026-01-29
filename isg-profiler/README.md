@@ -299,9 +299,9 @@ default mode
 - `ISG_score.tsv`
 - `per_gene_count.tsv`
 
-`--per-spices` mode
+`--per_species` mode
 
-- `per_gene_per_spices_count.tsv`
+- `per_gene_per_species_count.tsv`
 
 > [!NOTE]
 > Only default mode result can be used for ISG-VIP. See ISG-VIP documentation for detail.
@@ -318,7 +318,7 @@ default mode
 | **order_host**   | String    | Added from `sample_metadata.tsv`.                  |
 | **clade_host**   | String    | Added from `sample_metadata.tsv`.                  |
 
-##### `per_gene_count.tsv` (without `--per-spices`)
+##### `per_gene_count.tsv` (without `--per_species`)
 
 | Column Header          | Data Type | Description                         |
 | :--------------------- | :-------- | :---------------------------------- |
@@ -331,7 +331,7 @@ default mode
 
 #### `--per-spices` mode
 
-##### `per_gene_per_spices_count.tsv`
+##### `per_gene_per_species_count.tsv`
 
 | Column Header          | Data Type | Description                                   |
 | :--------------------- | :-------- | :-------------------------------------------- |
