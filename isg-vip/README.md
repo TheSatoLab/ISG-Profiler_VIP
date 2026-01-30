@@ -100,6 +100,11 @@ pip install .
 
 Before processing your actual samples, let's verify the installation using the **example dataset**.
 
+**0. Google Colaboratory**
+
+If you prefer an interactive environment or want to see a live demonstration, please refer to our Google Colab notebook:
+[![Run In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oPnOOWg23sxeHxfIM79s7etLexqrA_5r#scrollTo=vc77KBfxlz8c)
+
 **1. Check current directory**
 
 Ensure you are in the project root directory (`isg-vip`).
