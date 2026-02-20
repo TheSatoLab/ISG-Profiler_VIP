@@ -241,7 +241,7 @@ Create a TSV file with the following columns:
 | **sample_id**    | String    | NCBI SRA RUN ID                                                                                                |
 | **species_host** | String    | The scientific binomial name of the host organism. Spaces are replaced by underscores (e.g., `Gallus_gallus`). |
 | **order_host**   | String    | The taxonomic order to which the host species belongs (e.g., `Galliformes`).                                   |
-| **clade_host**   | String    | The broader taxonomic clade or class of the host (e.g., `Aves`, `Mammalia`).                                   |
+| **clade_host**   | String    | One of the following: Aves, Placentalia, or Marsupialia.                                   |
 
 > Check `sample_metadata.example.tsv` for a reference.
 
