@@ -5,7 +5,6 @@ library("ggplot2")
 library(psych)
 library(scales)
 
-setwd("~/OneDrive/ドキュメント/解析結果/Virome/universal/")
 all_filt <- read.table("modified_humref_ori_260217.txt", header = T, sep = "\t")
 ISG_score <- read.table("modified_ISGcore_humref_260217.txt", header = T, sep = "\t")
 
