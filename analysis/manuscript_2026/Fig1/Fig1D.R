@@ -11,8 +11,6 @@ library(ggtree)
 ###this script see the ISG expression differences on experimental infection samples
 ###you should download the SRA detailed descriptions
 
-setwd("~/OneDrive/ドキュメント/解析結果/Virome/virome/geNomad/")
-
 ISG_meta <- read.table("exp_inf_260216.txt", sep = "\t", header = T)
 
 #get specific BioProjectID data
