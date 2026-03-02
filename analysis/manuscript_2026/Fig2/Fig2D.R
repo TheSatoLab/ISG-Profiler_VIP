@@ -2,14 +2,7 @@ rm( list=ls(all=TRUE) ) # clean up R workspace
 ##load package
 library("tidyverse")
 library("ggplot2")
-library(patchwork)
-library(ggtext)
-library(ggpubr)
-library(multcompView)
-library(tidytext)
 
-
-setwd("~/OneDrive/ドキュメント/解析結果/Virome/virome/geNomad/Mammals_Aves_20k/")
 #import data
 Aves_Mam_mbio_genomad_filt_sum <- read.table("Aves_Mam_mbio_genomad_filt_ML_250630.txt", sep = "\t", header = T) %>%
   separate(taxonomy, into = c("Virus_g", "Realm_g", "Kingdom_g", "Phylum_g", "Class_g", "Order_g", "Family_g"), sep = ";", fill = "right") %>%
