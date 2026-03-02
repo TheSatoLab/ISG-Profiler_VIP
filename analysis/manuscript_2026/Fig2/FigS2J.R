@@ -5,8 +5,6 @@ library(ggplot2)
 library(tidyverse)
 library(ggpubr)
 
-setwd("~/OneDrive/ドキュメント/解析結果/Virome/virome/geNomad/Mammals_Aves_20k/")
-
 #import data
 ISG_meta <- read.table("Aves_Mam_mbio_250613_ISGscore_logan.txt", sep = "\t", header = T)
 Aves_Mam_mbio_genomad_filt_sum <- read.table("Aves_Mam_mbio_genomad_filt_ML_250630_for168438.txt", sep = "\t", header = T) %>% rename(ID = run_ID)
