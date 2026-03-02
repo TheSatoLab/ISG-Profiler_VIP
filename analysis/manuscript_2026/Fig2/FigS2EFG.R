@@ -9,7 +9,6 @@ library(multcompView)
 library(tidytext)
 library(forcats)
 
-setwd("~/OneDrive/ドキュメント/解析結果/Virome/virome/geNomad/Mammals_Aves_20k/")
 #import data
 Aves_Mam_mbio_genomad_filt <- read.table("Aves_Mam_mbio_genomad_filt_250630_for168438.txt", sep = "\t", header = T) %>%
   separate(taxonomy, into = c("Virus_g", "Realm_g", "Kingdom_g", "Phylum_g", "Class_g", "Order_g", "Family_g"), sep = ";", fill = "right") %>%
