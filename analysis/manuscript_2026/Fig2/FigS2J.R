@@ -4,7 +4,6 @@ library("tidyverse")
 library("ggplot2")
 library(tidytext)
 
-setwd("~/OneDrive/ドキュメント/解析結果/Virome/virome/geNomad/Mammals_Aves_20k/")
 #import data
 Aves_Mam_mbio_genomad_filt <- read.table("Aves_Mam_mbio_genomad_filt_250630_for168438.txt", sep = "\t", header = T) %>%
   separate(taxonomy, into = c("Virus_g", "Realm_g", "Kingdom_g", "Phylum_g", "Class_g", "Order_g", "Family_g"), sep = ";", fill = "right") %>%
@@ -66,7 +65,7 @@ test <- herpes_nohit %>%
   count(Species_b) %>%
   mutate(ratio = n / sum(n)) %>%
   mutate(classification = case_when(
-    is.na(Species_b) ~ NA_character_,  # NAはそのまま
+    is.na(Species_b) ~ NA_character_,  
     str_detect(Species_b, regex("synthetic", ignore_case = TRUE)) ~ "synthetic",
     str_detect(Species_b, regex("vector|cloning", ignore_case = TRUE)) ~ "vector",
     TRUE ~ "cellular"
@@ -94,7 +93,7 @@ test_x <- blastx_2602_mod %>%
   count(Species_b) %>%
   mutate(ratio = n / sum(n)) %>%
   mutate(classification = case_when(
-    is.na(Species_b) ~ NA_character_,  # NAはそのまま
+    is.na(Species_b) ~ NA_character_,
     str_detect(Species_b, regex("synthetic", ignore_case = TRUE)) ~ "synthetic",
     str_detect(Species_b, regex("vector|cloning", ignore_case = TRUE)) ~ "vector",
     TRUE ~ "cellular"
@@ -130,13 +129,13 @@ colnames(blastx_ori) <- c(
   "seq_name","sseqid","pident","length","mismatch","gapopen",
   "qstart","qend","sstart","send","evalue","bitscore","strand", "taxid", "protein_name", "na1", "na2", "na3", "na4"
 )
-# 2. qseqidごとに bitscore 最大1件（tiesなし）
+# 2. qseqidごとに bitscore 最大1件
 blastx_top <- blastx_ori %>%
   group_by(seq_name) %>%
   slice_max(order_by = bitscore, n = 1, with_ties = FALSE) %>%
   ungroup()
 
-# 3. stitle加工（awk + cut + sed 相当）
+# 3.編集
 blastx_protein <- blastx_top %>%
   mutate(
     protein = str_remove(protein_name, "^[^ ]+ "),
@@ -204,7 +203,7 @@ fill_colors <- c(
   "Metazoa: polyadenylate binding protein" = "#C44E52",
   "Metazoa: Other protein" = "#8172B3",
   "Orthoerpesviridae" = "#CCB974",
-  "Others" = "grey75",   # 少し濃いめグレー
+  "Others" = "grey75",  
   "No hit" = "grey40"
 )
 
