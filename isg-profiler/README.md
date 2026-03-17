@@ -2,6 +2,8 @@
 
 Cross-species ISG profiling for hidden virus detection in animal RNA-Seq data.
 
+<img width="176.2" height="75.4" alt="Image" src="https://github.com/user-attachments/assets/b052cd42-78d0-4f70-8f7c-21d7b361906a" />
+
 ## Requirements
 
 - bash >= 3.2
