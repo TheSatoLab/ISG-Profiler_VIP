@@ -2,7 +2,7 @@
 
 ISG Profiler & ISG-VIP: Identifying hidden viral infections across diverse animal species using innate immune signatures.
 
-<img width="171.52" height="63.28" alt="Image" src="https://github.com/user-attachments/assets/89dbd8a0-5541-4a7a-bf8c-7a3c9bacad00" />
+<img width="1715.2" height="632.8" alt="Image" src="https://github.com/user-attachments/assets/89dbd8a0-5541-4a7a-bf8c-7a3c9bacad00" />
 
 ## Project structure
 
