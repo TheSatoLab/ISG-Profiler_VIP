@@ -2,6 +2,8 @@
 
 Machine learning-based viral infection prediction using ISG (Interferon-Stimulated Gene) expression profiles.
 
+<img width="196.8" height="75.3" alt="Image" src="https://github.com/user-attachments/assets/4e1bc12a-ca73-44fd-beb5-d0af6086b089" />
+
 ## Requirements
 
 - Python 3.12
