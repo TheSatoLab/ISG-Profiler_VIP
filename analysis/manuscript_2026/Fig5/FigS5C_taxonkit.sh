@@ -1,0 +1,3 @@
+conda activate taxonkit
+cat taxids_blastn.txt | taxonkit lineage --data-dir /Users/kyokokurihara/Lab/db/taxdmp | taxonkit reformat -f "{d}" --lineage-field 2 --data-dir /Users/kyokokurihara/Lab/db/taxdmp -F | taxonkit reformat -f "{f};{g};{s}" --lineage-field 2 --data-dir /Users/kyokokurihara/Lab/db/taxdmp -F | cut -f 1,3,4 > ./taxids_lineage_blastn.txt
+cat taxids_blastn.txt | taxonkit lineage --data-dir /Users/kyokokurihara/Lab/db/taxdmp | taxonkit reformat -f "{d};{K};{p};{c};{o};{f};{g};{s}" --lineage-field 2 --data-dir /Users/kyokokurihara/Lab/db/taxdmp -F | cut -f 1,3 > taxids_long_blastn.txt
