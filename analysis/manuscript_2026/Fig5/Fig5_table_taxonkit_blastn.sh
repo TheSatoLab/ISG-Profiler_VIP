@@ -1,6 +1,6 @@
 conda activate taxonkit
 
-path_out=/Users/kyokokurihara/iLab/itolab_backup/backup-latest/Lab/projects/2507blastx/output/250909_4474_samples/final_test/figS5C/
+path_out=/Users/kyokokurihara/iLab/itolab_backup/backup-latest/Lab/projects/2507blastx/output/250909_4474_samples/final_test/
 db_path=/Users/kyokokurihara/iLab/itolab_backup/backup-latest/Lab/db/taxdmp
 
 cd "$path_out"
