@@ -4,10 +4,8 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 
-# change working direcotry
-# setwd("/Users/kyokokurihara/Lab/projects/2507blastx/output/251225GSEA/chaphama_251216_MSigDB_Hallmark_2020_stat/dotplot_chaphama")  # stat
-# setwd("/Users/kyokokurihara/Lab/projects/2507blastx/output/251225GSEA/chaphama_260127_MSigDB_Hallmark_2020_stat/dotplot_chaphama_260127")  # 260127
-setwd("/Users/kyokokurihara/Lab/projects/2507blastx/output/251225GSEA/chaphama_260206_MSigDB_Hallmark_2020_stat_blastx_filtered/dotplot_chaphama_260209/")  # 260209
+# change working directory
+setwd("/Users/kyokokurihara/iLab/itolab_backup/backup-latest/Lab/projects/2507blastx/output/250909_4474_samples/final_test/chaphama_260206_MSigDB_Hallmark_2020_stat_blastx_filtered/dotplot_chaphama/")
 
 # read table
 df_all <- read_csv("NES_termshared_top10_FDR05.csv") |>
@@ -26,7 +24,6 @@ term_levels <- df_all |>
 project_levels <- df_all |>
   distinct(Project) |>
   pull(Project)
-# project_levels <- c("p1","p2","p3")
 
 df_all <- df_all |>
   mutate(
@@ -73,5 +70,4 @@ p <- ggplot(df_all, aes(
     fill = guide_colorbar(barheight = unit(20, "mm"), barwidth = unit(4, "mm"))
   )
 
-ggsave("stat_dotplot_1panel.png", p, width = 4.2, height = 6.5, units = "in", dpi = 300)
 ggsave("stat_dotplot_1panel.pdf", p, width = 4.2, height = 6.5, units = "in")
