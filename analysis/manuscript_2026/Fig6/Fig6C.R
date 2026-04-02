@@ -4,9 +4,8 @@ library(tidyr)
 library(ggplot2)
 library(scales)
 
-# change working direcotry
-setwd("/Users/kyokokurihara/Lab/projects/2507blastx/output/251225GSEA/hapatovirus_260113_MSigDB_Hallmark_2020_stat/dotplot_hepatovirus")
-# setwd("/Users/kyokokurihara/Lab/projects/2507blastx/output/251225GSEA/hapatovirus_260113_MSigDB_Hallmark_2020_stat_v2/dotplot_hepatovirus")
+# change working directory
+setwd("/Users/kyokokurihara/iLab/itolab_backup/backup-latest/Lab/projects/2507blastx/output/250909_4474_samples/final_test/hepatovirus_260113_MSigDB_Hallmark_2020_stat/dotplot_hepatovirus/")
 
 # read table
 df_all <- read_csv("NES_termshared_top10_FDR05.csv") |>
@@ -73,5 +72,4 @@ p <- ggplot(df_all, aes(
     fill = guide_colorbar(barheight = unit(20, "mm"), barwidth = unit(4, "mm"))
   )
 
-ggsave("stat_dotplot_1panel_hepatovirus.png", p, width = 4, height = 4.2, units = "in", dpi = 300)
 ggsave("stat_dotplot_1panel_hepatovirus.pdf", p, width = 4, height = 4.2, units = "in")
